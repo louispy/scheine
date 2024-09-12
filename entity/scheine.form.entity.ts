@@ -7,18 +7,14 @@ export class ScheineForm extends BaseEntity {
   @PrimaryColumn('uuid')
   id: string;
 
-  @Column({ nullable: true })
-  scheine_type: string;
-
   @Column({ type: 'uuid', nullable: true })
-  parent_id: string;
+  parent_id?: string;
 
   @Column({ type: 'character varying' })
-  // field: string;
-  field: 'boolean' | 'number' | 'string' | 'date' | 'object';
+  data_type: 'boolean' | 'number' | 'string' | 'date' | 'object';
 
   @Column()
-  data_type: string;
+  field: string;
 
   @Column()
   required: boolean;

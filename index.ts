@@ -4,6 +4,8 @@ import express from 'express';
 import morgan from 'morgan';
 
 import { AppDataSource } from './db/data-source';
+import scheineRouter from './routes/scheine';
+import scheineFormRouter from './routes/scheine-form';
 
 const bootstrap = async () => {
   dotenv.config();
@@ -24,6 +26,8 @@ const bootstrap = async () => {
     res.send('Hello, TypeScript Node Express!');
   });
 
+  app.use(scheineRouter());
+  app.use(scheineFormRouter());
 
   app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
