@@ -1,5 +1,6 @@
 import { Type } from 'class-transformer';
 import { IsIn, IsNotEmpty, IsOptional, ValidateNested } from 'class-validator';
+import { IsValidRegex } from '../lib/regex.validator';
 
 export class ScheineFormPayload {
   @IsOptional()
@@ -16,7 +17,15 @@ export class ScheineFormPayload {
   required: boolean;
 
   @IsOptional()
+  @IsValidRegex()
+  regex?: string;
+
+  @IsOptional()
+  format_sample?: string;
+
+  @IsOptional()
   @ValidateNested()
   @Type(() => ScheineFormPayload)
   children?: ScheineFormPayload[];
+
 }

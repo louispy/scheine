@@ -18,4 +18,10 @@ export class ScheineForm extends BaseEntity {
 
   @Column()
   required: boolean;
+
+  @Column({ nullable: true })
+  regex?: string;
+
+  @Column({ nullable: true })
+  format_sample?: string;
 }

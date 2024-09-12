@@ -31,6 +31,8 @@ export class ScheineFormService {
       parent_id,
       required: field.required,
       field: field.field,
+      regex: field.regex,
+      format_sample: field.format_sample,
       created_at: now,
       updated_at: now,
     } as ScheineForm;

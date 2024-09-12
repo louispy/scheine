@@ -8,7 +8,9 @@
     "dev": "nodemon index.ts",
     "typeorm:migration:up": "typeorm migration:run",
     "migration:up": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:run -d db/data-source.ts",
-    "migration:generate": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:generate migration/Init -d db/data-source.ts"
+    "migration:down": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:revert -d db/data-source.ts",
+    "migration:generate": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:generate migration/Init -d db/data-source.ts",
+    "seed": "ts-node -r tsconfig-paths/register db/seed.ts"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +18,7 @@
   "devDependencies": {
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
+    "@types/lodash": "^4.17.7",
     "@types/morgan": "^1.9.9",
     "@types/node": "^22.5.4",
     "@types/uuid": "^10.0.0",
@@ -24,9 +27,12 @@
     "typescript": "^5.5.4"
   },
   "dependencies": {
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "lodash": "^4.17.21",
     "morgan": "^1.10.0",
     "pg": "^8.12.0",
     "reflect-metadata": "^0.2.2",
