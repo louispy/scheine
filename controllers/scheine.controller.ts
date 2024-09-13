@@ -24,7 +24,6 @@ export class ScheineController {
       const payload = plainToInstance(CreateScheinePayload, req.body);
       await validateOrReject(payload);
       const data = await this.scheineService.create(payload);
-
       return res.json({ data });
     } catch (error) {
       return handleAPIError(error, res);

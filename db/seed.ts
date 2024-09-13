@@ -15,9 +15,9 @@ const seed = async () => {
     id: doctorId,
     doctor_number: 'd1234',
     medical_practice_number: 'mp1234',
-    name: 'M Ali',
+    name: 'Clint Eastwood',
     signature:
-      'https://www.signwell.com/assets/vip-signatures/muhammad-ali-signature-3f9237f6fc48c3a04ba083117948e16ee7968aae521ae4ccebdfb8f22596ad22.svg',
+      'https://www.signwell.com/assets/vip-signatures/clint-eastwood-signature-e5a46a2363ef513d4fc0a45d8c0340943082ce60229084e3a12b82539321094b.png',
     created_at: now,
     updated_at: now,
   } as Doctor);

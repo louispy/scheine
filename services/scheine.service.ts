@@ -8,6 +8,7 @@ import { Scheine } from '../entity/scheine.entity';
 import { ScheineForm } from '../entity/scheine.form.entity';
 import { AppError } from '../lib/errors';
 import { CreateScheinePayload } from '../models/scheine.payload';
+import { PdfService } from './pdf.service';
 
 export class ScheineService {
   constructor(
@@ -15,6 +16,7 @@ export class ScheineService {
     private readonly patientRepository: Repository<Patient>,
     private readonly doctorRepository: Repository<Doctor>,
     private readonly scheineFormRepository: Repository<ScheineForm>,
+    private readonly pdfService: PdfService,
   ) {}
 
   async getAll() {
@@ -29,6 +31,8 @@ export class ScheineService {
 
   async create(payload: CreateScheinePayload) {
     try {
+      // const b = await this.pdfService.generate('Mustersammlung.de.en');
+      // return b;
       const patient = await this.patientRepository.findOne({
         where: { id: payload.patient_id },
       });
@@ -112,7 +116,7 @@ export class ScheineService {
         updated_at: now,
       } as Scheine);
 
-      return {
+      const resData = {
         id,
         patient: {
           id: patient.id,
@@ -129,6 +133,14 @@ export class ScheineService {
         },
         created_at: now,
         data,
+      };
+      const pdf_base64 = await this.pdfService
+        .generate(form.field, resData)
+        .catch(console.log);
+
+      return {
+        ...resData,
+        pdf_base64,
       };
     } catch (err) {
       console.error(err);
