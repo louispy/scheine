@@ -1,15 +1,8 @@
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  OneToOne,
-  PrimaryColumn,
-} from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 
 import { BaseEntity } from './base.entity';
-import { Patient } from './patients.entity';
 import { Doctor } from './doctor.entity';
+import { Patient } from './patients.entity';
 
 @Entity('scheine')
 export class Scheine extends BaseEntity {

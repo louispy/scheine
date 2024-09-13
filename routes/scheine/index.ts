@@ -13,6 +13,11 @@ const scheineRouter = (container: AppContainer): Router => {
     .get(scheineController.getAll.bind(scheineController))
     .post(scheineController.create.bind(scheineController));
 
+  router.get(
+    '/scheine/:id/preview',
+    scheineController.getPreview.bind(scheineController),
+  );
+
   return router;
 };
 

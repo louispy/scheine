@@ -187,12 +187,35 @@ export class ScheineService {
       };
       const pdf_base64 = await this.pdfService
         .generate(form.field, resData)
-        .catch(console.log);
+        .catch(() => '');
 
       return {
         ...resData,
         pdf_base64,
       };
+    } catch (err) {
+      console.error(err);
+      throw err;
+    }
+  }
+
+  async getPreview(id: string): Promise<string> {
+    try {
+      const schein = await this.scheineRepository.findOne({
+        where: { id },
+        relations: ['patient', 'doctor'],
+      });
+
+      if (!schein) {
+        throw new AppError('Schein not found', 404);
+      }
+
+      const pdf_base64 = await this.pdfService.generate(
+        schein.scheine_type,
+        schein,
+      );
+
+      return pdf_base64;
     } catch (err) {
       console.error(err);
       throw err;
