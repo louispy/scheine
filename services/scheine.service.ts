@@ -131,7 +131,7 @@ export class ScheineService {
           const toBeValidated = _.get(data, key);
           if (f.required && _.isNil(toBeValidated)) {
             errors.push(`${key} is required`);
-          } else if (typeof toBeValidated !== f.data_type) {
+          } else if (!_.isNil(toBeValidated) && typeof toBeValidated !== f.data_type) {
             errors.push(`${key}: invalid data type, should be ${f.data_type}`);
           } else if (typeof toBeValidated === 'string' && f.regex) {
             const re = new RegExp(f.regex);
@@ -147,7 +147,6 @@ export class ScheineService {
           }
         });
 
-        if (errors.length) break;
       }
 
       if (errors.length) {
@@ -210,6 +209,7 @@ export class ScheineService {
         throw new AppError('Schein not found', 404);
       }
 
+      console.log('scheine', schein)
       const pdf_base64 = await this.pdfService.generate(
         schein.scheine_type,
         schein,
