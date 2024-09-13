@@ -1,4 +1,10 @@
-import { IsNotEmpty, IsOptional, IsUUID } from 'class-validator';
+import {
+  IsDateString,
+  IsNotEmpty,
+  IsOptional,
+  IsUUID,
+  Matches,
+} from 'class-validator';
 
 export class CreateScheinePayload {
   @IsNotEmpty()
@@ -42,4 +48,28 @@ export interface CreateScheineResponse {
   data: Object;
   created_at: string;
   pdf_base64: string;
+}
+
+export class GetScheineQuery {
+  @IsOptional()
+  @IsUUID()
+  patient_id?: string;
+
+  @IsOptional()
+  @IsUUID()
+  doctor_id?: string;
+
+  @IsOptional()
+  @Matches('^(\\d{4})-(0[1-9]|1[0-2])-([0-2][0-9]|3[01])$') // YYYY-MM-DD
+  start_date?: string;
+
+  @IsOptional()
+  @Matches('^(\\d{4})-(0[1-9]|1[0-2])-([0-2][0-9]|3[01])$') // YYYY-MM-DD
+  end_date?: string;
+
+  @IsOptional()
+  page?: number;
+
+  @IsOptional()
+  limit?: number;
 }

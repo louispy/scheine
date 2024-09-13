@@ -4,7 +4,7 @@ import { BaseEntity } from './base.entity';
 
 @Entity('doctor')
 export class Doctor extends BaseEntity {
-  @PrimaryColumn('uuid')
+  @PrimaryColumn({ type: 'uuid' })
   id: string;
 
   @Column()

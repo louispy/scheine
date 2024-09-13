@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import { Repository } from 'typeorm';
+import { Between, LessThan, MoreThanOrEqual, Repository } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 
 import { Doctor } from '../entity/doctor.entity';
@@ -7,7 +7,10 @@ import { Patient } from '../entity/patients.entity';
 import { Scheine } from '../entity/scheine.entity';
 import { ScheineForm } from '../entity/scheine.form.entity';
 import { AppError } from '../lib/errors';
-import { CreateScheinePayload } from '../models/scheine.payload';
+import {
+  CreateScheinePayload,
+  GetScheineQuery,
+} from '../models/scheine.payload';
 import { PdfService } from './pdf.service';
 
 export class ScheineService {
@@ -19,9 +22,57 @@ export class ScheineService {
     private readonly pdfService: PdfService,
   ) {}
 
-  async getAll() {
+  async getAll(query: GetScheineQuery) {
     try {
-      const res = await this.scheineRepository.find();
+      const criteria: any = {};
+
+      if (query.patient_id) {
+        criteria.patient_id = query.patient_id;
+      }
+      if (query.doctor_id) {
+        criteria.doctor_id = query.doctor_id;
+      }
+
+      if (query.start_date || query.end_date) {
+        if (query.start_date && query.end_date) {
+          const start = new Date(query.start_date);
+          const end = new Date(query.end_date);
+          criteria.created_at = Between(start, end);
+        }
+        if (query.start_date) {
+          const start = new Date(query.start_date);
+          criteria.created_at = MoreThanOrEqual(start);
+        }
+        if (query.end_date) {
+          const end = new Date(query.end_date);
+          criteria.created_at = LessThan(end);
+        }
+      }
+
+      const res = await this.scheineRepository.find({
+        // select: {
+        //   id: true,
+        //   created_at: true,
+        //   updated_at: true,
+        //   scheine_type: true,
+        //   form_id: true,
+        //   patient: {
+        //     id: true,
+        //     name: true,
+        //     date_of_birth: true,
+        //     insurance_number: true,
+        //   },
+        //   doctor: {
+        //     id: true,
+        //     name: true,
+        //     signature: true,
+        //     medical_practice_number: true,
+        //     doctor_number: true,
+        //   },
+        // },
+        where: criteria,
+        relations: ['patient', 'doctor'],
+      });
       return res;
     } catch (err) {
       console.error(err);

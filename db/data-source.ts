@@ -9,4 +9,5 @@ export const AppDataSource = new DataSource({
   entities: ['entity/**/*.ts'],
   migrations: ['migration/**/*.ts'],
   subscribers: ['subscriber/**/*.ts'], // Path to subscriber files
+  logging: true,
 });

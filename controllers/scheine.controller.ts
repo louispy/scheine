@@ -3,7 +3,7 @@ import { validateOrReject } from 'class-validator';
 import { Request, Response } from 'express';
 
 import { handleAPIError } from '../lib/errors';
-import { CreateScheinePayload } from '../models/scheine.payload';
+import { CreateScheinePayload, GetScheineQuery } from '../models/scheine.payload';
 import { ScheineService } from '../services/scheine.service';
 
 export class ScheineController {
@@ -11,7 +11,9 @@ export class ScheineController {
 
   async getAll(req: Request, res: Response) {
     try {
-      const data = await this.scheineService.getAll();
+      const query = plainToInstance(GetScheineQuery, req.query);
+      await validateOrReject(query);
+      const data = await this.scheineService.getAll(query);
 
       return res.json({ data });
     } catch (error) {

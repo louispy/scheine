@@ -1,10 +1,19 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToOne,
+  PrimaryColumn,
+} from 'typeorm';
 
 import { BaseEntity } from './base.entity';
+import { Patient } from './patients.entity';
+import { Doctor } from './doctor.entity';
 
 @Entity('scheine')
 export class Scheine extends BaseEntity {
-  @PrimaryColumn('uuid')
+  @PrimaryColumn({ type: 'uuid' })
   id: string;
 
   @Column()
@@ -21,4 +30,12 @@ export class Scheine extends BaseEntity {
 
   @Column({ type: 'json' })
   data: Object;
+
+  @ManyToOne(() => Patient)
+  @JoinColumn({ name: 'patient_id', referencedColumnName: 'id' })
+  patient: Patient;
+
+  @ManyToOne(() => Doctor)
+  @JoinColumn({ name: 'doctor_id', referencedColumnName: 'id' })
+  doctor: Doctor;
 }

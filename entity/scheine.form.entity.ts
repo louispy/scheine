@@ -4,7 +4,7 @@ import { BaseEntity } from './base.entity';
 
 @Entity('scheine_form')
 export class ScheineForm extends BaseEntity {
-  @PrimaryColumn('uuid')
+  @PrimaryColumn({ type: 'uuid' })
   id: string;
 
   @Column({ type: 'uuid', nullable: true })

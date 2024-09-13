@@ -1,8 +1,13 @@
-import { BaseEntity as TypeOrmBaseEntity, Column, BeforeInsert, PrimaryColumn } from 'typeorm';
+import {
+  BaseEntity as TypeOrmBaseEntity,
+  Column,
+  BeforeInsert,
+  PrimaryColumn,
+} from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 
 export class BaseEntity extends TypeOrmBaseEntity {
-  @PrimaryColumn()
+  @PrimaryColumn({ type: 'uuid' })
   id: string;
 
   @Column({ type: 'timestamptz' })
