@@ -21,6 +21,9 @@ export class Scheine extends BaseEntity {
   @Column({ type: 'uuid' })
   doctor_id: string;
 
+  @Column()
+  date_of_issue: Date;
+
   @Column({ type: 'json' })
   data: Object;
 

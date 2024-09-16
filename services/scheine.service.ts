@@ -82,8 +82,6 @@ export class ScheineService {
 
   async create(payload: CreateScheinePayload) {
     try {
-      // const b = await this.pdfService.generate('Mustersammlung.de.en');
-      // return b;
       const patient = await this.patientRepository.findOne({
         where: { id: payload.patient_id },
       });
@@ -161,6 +159,7 @@ export class ScheineService {
         doctor_id: doctor.id,
         form_id: form.id,
         scheine_type: form.field,
+        date_of_issue: _.get(data, 'date', now),
         data,
         created_at: now,
         updated_at: now,
@@ -173,6 +172,10 @@ export class ScheineService {
           name: patient.name,
           date_of_birth: patient.date_of_birth,
           insurance_number: patient.insurance_number,
+          establishment_number: patient.establishment_number,
+          status: patient.status,
+          financial_institution: patient.financial_institution,
+          cost_unit_identification: patient.cost_unit_identification,
         },
         doctor: {
           id: doctor.id,
@@ -181,7 +184,7 @@ export class ScheineService {
           medical_practice_number: doctor.medical_practice_number,
           signature: doctor.signature,
         },
-        created_at: now,
+        created_at: _.get(data, 'date', now),
         data,
       };
       const pdf_base64 = await this.pdfService
@@ -209,7 +212,6 @@ export class ScheineService {
         throw new AppError('Schein not found', 404);
       }
 
-      console.log('scheine', schein)
       const pdf_base64 = await this.pdfService.generate(
         schein.scheine_type,
         schein,

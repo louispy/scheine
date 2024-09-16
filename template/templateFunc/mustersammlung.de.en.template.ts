@@ -21,7 +21,7 @@ export const generateMustersammlungDeEnPdf = async (
   const page = pages[0];
 
   page.drawText(
-    _.get(data, 'data.insurance_name', ''),
+    _.get(data, 'patient.financial_institution', ''),
     getSmallTextOpts(30, 560, font),
   );
   page.drawText(_.get(data, 'patient.name', ''), getSmallTextOpts(30, 520, font));
@@ -30,16 +30,16 @@ export const generateMustersammlungDeEnPdf = async (
     getSmallTextOpts(210, 520, font),
   );
   page.drawText(
-    _.get(data, 'data.cost_unit_identification', ''),
+    _.get(data, 'patient.cost_unit_identification', ''),
     getSmallTextOpts(30, 480, font),
   );
   page.drawText(
     _.get(data, 'patient.insurance_number', ''),
     getSmallTextOpts(110, 480, font),
   );
-  page.drawText(_.get(data, 'data.status', ''), getSmallTextOpts(205, 480, font));
+  page.drawText(_.get(data, 'patient.status', ''), getSmallTextOpts(205, 480, font));
   page.drawText(
-    _.get(data, 'data.establishment_no', ''),
+    _.get(data, 'patient.establishment_number', ''),
     getSmallTextOpts(30, 450, font),
   );
   page.drawText(
