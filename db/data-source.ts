@@ -6,8 +6,8 @@ dotenv.config();
 export const AppDataSource = new DataSource({
   url: process.env.DATABASE_URI,
   type: 'postgres',
-  entities: ['entity/**/*.ts'],
-  migrations: ['migration/**/*.ts'],
+  entities: [__dirname + '/../**/*.entity.{js,ts}'],
+  migrations: ['migration/**/*.{js,ts}'],
   subscribers: ['subscriber/**/*.ts'], // Path to subscriber files
   logging: true,
 });

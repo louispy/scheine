@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "tsc && node dist/index.js",
+    "start": "tsc && ts-node dist/index.js",
     "dev": "nodemon index.ts",
     "typeorm:migration:up": "typeorm migration:run",
     "migration:up": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:run -d db/data-source.ts",
