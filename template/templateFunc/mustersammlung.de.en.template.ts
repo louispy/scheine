@@ -24,7 +24,7 @@ export const generateMustersammlungDeEnPdf = async (
     _.get(data, 'data.insurance_name', ''),
     getSmallTextOpts(30, 560, font),
   );
-  page.drawText(_.get(data, 'patient.name'), getSmallTextOpts(30, 520, font));
+  page.drawText(_.get(data, 'patient.name', ''), getSmallTextOpts(30, 520, font));
   page.drawText(
     _.get(data, 'patient.date_of_birth', ''),
     getSmallTextOpts(210, 520, font),
@@ -37,7 +37,7 @@ export const generateMustersammlungDeEnPdf = async (
     _.get(data, 'patient.insurance_number', ''),
     getSmallTextOpts(110, 480, font),
   );
-  page.drawText(_.get(data, 'data.status'), getSmallTextOpts(205, 480, font));
+  page.drawText(_.get(data, 'data.status', ''), getSmallTextOpts(205, 480, font));
   page.drawText(
     _.get(data, 'data.establishment_no', ''),
     getSmallTextOpts(30, 450, font),
@@ -48,8 +48,8 @@ export const generateMustersammlungDeEnPdf = async (
   );
   page.drawText(_.get(data, 'data.date', ''), getSmallTextOpts(190, 450, font));
 
-  const diagnosis =
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum';
+  const diagnosis = _.get(data, 'data.diagnosis', '');
+
   const maxCharPerRow = 65;
   for (let i = 0; i < 5; i++) {
     const row = diagnosis.substring(i * maxCharPerRow, (i + 1) * maxCharPerRow);
@@ -67,7 +67,7 @@ export const generateMustersammlungDeEnPdf = async (
     getSmallTextOpts(340, 525, font),
   );
   page.drawText(
-    _.get(data, 'data.hospital_regulation.attending_physician_treatment')
+    _.get(data, 'data.hospital_regulation.accident')
       ? 'V'
       : 'X',
     getSmallTextOpts(270, 500, font),
