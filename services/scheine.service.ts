@@ -37,39 +37,17 @@ export class ScheineService {
         if (query.start_date && query.end_date) {
           const start = new Date(query.start_date);
           const end = new Date(query.end_date);
-          criteria.created_at = Between(start, end);
-        }
-        if (query.start_date) {
+          criteria.date_of_issue = Between(start, end);
+        } else if (query.start_date) {
           const start = new Date(query.start_date);
-          criteria.created_at = MoreThanOrEqual(start);
-        }
-        if (query.end_date) {
+          criteria.date_of_issue = MoreThanOrEqual(start);
+        } else if (query.end_date) {
           const end = new Date(query.end_date);
-          criteria.created_at = LessThan(end);
+          criteria.date_of_issue = LessThan(end);
         }
       }
 
       const res = await this.scheineRepository.find({
-        // select: {
-        //   id: true,
-        //   created_at: true,
-        //   updated_at: true,
-        //   scheine_type: true,
-        //   form_id: true,
-        //   patient: {
-        //     id: true,
-        //     name: true,
-        //     date_of_birth: true,
-        //     insurance_number: true,
-        //   },
-        //   doctor: {
-        //     id: true,
-        //     name: true,
-        //     signature: true,
-        //     medical_practice_number: true,
-        //     doctor_number: true,
-        //   },
-        // },
         where: criteria,
         relations: ['patient', 'doctor'],
       });
